@@ -150,6 +150,47 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
 .car-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.25);transition:background .2s,transform .2s;cursor:pointer}
 .car-dot.active{background:var(--accent);transform:scale(1.3)}
 .car-count{position:absolute;top:7px;right:9px;font-size:10px;color:rgba(232,232,240,.5);background:rgba(8,8,16,.6);padding:2px 7px;border-radius:10px}
+/* clickable hint on carousel */
+.carousel{cursor:zoom-in}
+
+/* ── LIGHTBOX ── */
+#lightbox{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease}
+#lightbox.open{opacity:1;pointer-events:all}
+#lb-backdrop{position:absolute;inset:0;background:rgba(4,4,10,.92);backdrop-filter:blur(18px)}
+#lb-box{position:relative;z-index:1;width:90vw;max-width:920px;display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:rgba(14,14,22,1);border:.5px solid rgba(255,255,255,.1);transform:scale(.94);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+#lightbox.open #lb-box{transform:scale(1)}
+#lb-img-wrap{position:relative;width:100%;overflow:hidden;background:#0a0a12;max-height:72vh;display:flex;align-items:center;justify-content:center}
+#lb-img-wrap img{max-width:100%;max-height:72vh;object-fit:contain;display:block}
+#lb-close{position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(8,8,16,.8);border:.5px solid rgba(255,255,255,.15);color:var(--text);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;line-height:1}
+#lb-close:hover{background:rgba(200,240,160,.15);border-color:var(--accent)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(8,8,16,.75);border:.5px solid rgba(255,255,255,.15);color:var(--text);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;font-size:20px;transition:all .2s}
+.lb-nav:hover{background:rgba(200,240,160,.15);border-color:var(--accent)}
+#lb-prev{left:14px}
+#lb-next{right:14px}
+.lb-nav.hidden{opacity:0;pointer-events:none}
+#lb-footer{padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-top:.5px solid rgba(255,255,255,.07);flex-shrink:0}
+#lb-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#f0f0fa}
+#lb-counter{font-size:12px;color:var(--muted)}
+#lb-dots{display:flex;gap:6px;align-items:center}
+.lb-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .2s}
+.lb-dot.active{background:var(--accent);transform:scale(1.3)}
+
+/* ── MAP VIEWER (NovaBuild only) ── */
+#mapviewer{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s ease;background:rgba(4,4,10,.97)}
+#mapviewer.open{opacity:1;pointer-events:all}
+#mv-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:.5px solid rgba(255,255,255,.08);flex-shrink:0}
+#mv-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#f0f0fa}
+#mv-controls{display:flex;gap:8px;align-items:center}
+.mv-btn{background:rgba(255,255,255,.05);border:.5px solid rgba(255,255,255,.12);color:var(--muted);padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:inherit}
+.mv-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-dim)}
+#mv-zoom-label{font-size:12px;color:var(--muted);min-width:44px;text-align:center}
+#mv-close{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.05);border:.5px solid rgba(255,255,255,.12);color:var(--text);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;margin-left:8px;font-family:inherit}
+#mv-close:hover{background:rgba(200,240,160,.15);border-color:var(--accent)}
+#mv-canvas-wrap{flex:1;overflow:hidden;position:relative;cursor:grab}
+#mv-canvas-wrap.dragging{cursor:grabbing}
+#mv-canvas{display:block}
+#mv-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(232,232,240,.25);letter-spacing:.5px;pointer-events:none}
+
 
 /* CERTS */
 #s-certs{max-width:960px;margin:0 auto;width:100%}
@@ -340,6 +381,42 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
 
 </div>
 
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <div id="lb-backdrop"></div>
+  <div id="lb-box">
+    <div id="lb-img-wrap">
+      <img id="lb-img" src="" alt="">
+      <button id="lb-close" aria-label="Close">&#x2715;</button>
+      <button class="lb-nav" id="lb-prev" aria-label="Previous">&#8249;</button>
+      <button class="lb-nav" id="lb-next" aria-label="Next">&#8250;</button>
+    </div>
+    <div id="lb-footer">
+      <div id="lb-title"></div>
+      <div id="lb-dots"></div>
+      <div id="lb-counter"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAP VIEWER for NovaBuild -->
+<div id="mapviewer">
+  <div id="mv-header">
+    <div id="mv-title">NovaBuild Enterprise Network — Topology</div>
+    <div id="mv-controls">
+      <button class="mv-btn" id="mv-zout">&#x2212; Zoom Out</button>
+      <span id="mv-zoom-label">100%</span>
+      <button class="mv-btn" id="mv-zin">&#x2b; Zoom In</button>
+      <button class="mv-btn" id="mv-reset">&#x21BA; Reset</button>
+      <button id="mv-close" aria-label="Close">&#x2715;</button>
+    </div>
+  </div>
+  <div id="mv-canvas-wrap">
+    <canvas id="mv-canvas"></canvas>
+    <div id="mv-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan</div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
    PROJECT DATA
@@ -444,12 +521,150 @@ const PROJECTS = [
    CAROUSEL ENGINE — no need to touch anything below this line
    ============================================================ */
 
-function buildCarousel(images, projectId) {
+/* ── LIGHTBOX ENGINE ── */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbTitle = document.getElementById('lb-title');
+const lbCounter = document.getElementById('lb-counter');
+const lbDots = document.getElementById('lb-dots');
+const lbPrev = document.getElementById('lb-prev');
+const lbNext = document.getElementById('lb-next');
+let lbImages=[], lbIdx=0, lbProjTitle='';
+
+function lbOpen(images, idx, title) {
+  lbImages = images; lbIdx = idx; lbProjTitle = title;
+  lbRender();
+  lb.classList.add('open');
+  document.body.style.cursor = 'none';
+}
+function lbClose() {
+  lb.classList.remove('open');
+}
+function lbRender() {
+  lbImg.src = 'screenshots/' + lbImages[lbIdx];
+  lbTitle.textContent = lbProjTitle;
+  lbCounter.textContent = (lbImages.length > 1) ? `${lbIdx+1} / ${lbImages.length}` : '';
+  lbPrev.classList.toggle('hidden', lbIdx===0);
+  lbNext.classList.toggle('hidden', lbIdx===lbImages.length-1);
+  lbDots.innerHTML = '';
+  if(lbImages.length > 1) {
+    lbImages.forEach((_,i)=>{
+      const d=document.createElement('div');
+      d.className='lb-dot'+(i===lbIdx?' active':'');
+      d.addEventListener('click',()=>{lbIdx=i;lbRender();});
+      lbDots.appendChild(d);
+    });
+  }
+}
+document.getElementById('lb-close').addEventListener('click', lbClose);
+document.getElementById('lb-backdrop').addEventListener('click', lbClose);
+lbPrev.addEventListener('click', e=>{e.stopPropagation();if(lbIdx>0){lbIdx--;lbRender();}});
+lbNext.addEventListener('click', e=>{e.stopPropagation();if(lbIdx<lbImages.length-1){lbIdx++;lbRender();}});
+document.addEventListener('keydown', e=>{
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') lbClose();
+  if(e.key==='ArrowRight'&&lbIdx<lbImages.length-1){lbIdx++;lbRender();}
+  if(e.key==='ArrowLeft'&&lbIdx>0){lbIdx--;lbRender();}
+});
+
+/* ── MAP VIEWER ENGINE ── */
+const mv = document.getElementById('mapviewer');
+const mvCanvas = document.getElementById('mv-canvas');
+const mvWrap = document.getElementById('mv-canvas-wrap');
+const mvZoomLabel = document.getElementById('mv-zoom-label');
+let mvImg=null, mvScale=1, mvMinScale=0.2, mvMaxScale=8;
+let mvOffX=0, mvOffY=0, mvDragging=false, mvDragX=0, mvDragY=0;
+
+function mvOpen(src) {
+  mv.classList.add('open');
+  if(!mvImg || mvImg._src !== src) {
+    mvImg = new Image();
+    mvImg._src = src;
+    mvImg.onload = () => { mvFit(); mvDraw(); };
+  mvImg.onerror = () => {
+    const ctx=mvCanvas.getContext('2d');
+    mvCanvas.width=mvWrap.clientWidth; mvCanvas.height=mvWrap.clientHeight;
+    ctx.fillStyle='rgba(232,232,240,0.08)';
+    ctx.fillRect(0,0,mvCanvas.width,mvCanvas.height);
+    ctx.fillStyle='rgba(232,232,240,0.3)';
+    ctx.font='14px DM Sans, sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('📸 Upload screenshots/novabuild-full.png to see the topology', mvCanvas.width/2, mvCanvas.height/2);
+  };
+    mvImg.src = src;
+  } else {
+    mvFit(); mvDraw();
+  }
+}
+function mvClose() { mv.classList.remove('open'); }
+function mvFit() {
+  const w=mvWrap.clientWidth, h=mvWrap.clientHeight;
+  mvCanvas.width=w; mvCanvas.height=h;
+  const s=Math.min(w/mvImg.naturalWidth, h/mvImg.naturalHeight)*0.92;
+  mvScale=s; mvMinScale=s*0.3;
+  mvOffX=(w-mvImg.naturalWidth*s)/2;
+  mvOffY=(h-mvImg.naturalHeight*s)/2;
+  mvZoomLabel.textContent=Math.round(s*100)+'%';
+}
+function mvDraw() {
+  const ctx=mvCanvas.getContext('2d');
+  ctx.clearRect(0,0,mvCanvas.width,mvCanvas.height);
+  if(mvImg&&mvImg.complete) ctx.drawImage(mvImg, mvOffX, mvOffY, mvImg.naturalWidth*mvScale, mvImg.naturalHeight*mvScale);
+}
+function mvZoomAt(factor, cx, cy) {
+  const ns=Math.min(Math.max(mvScale*factor, mvMinScale), mvMaxScale);
+  const f=ns/mvScale;
+  mvOffX=cx-(cx-mvOffX)*f;
+  mvOffY=cy-(cy-mvOffY)*f;
+  mvScale=ns;
+  mvZoomLabel.textContent=Math.round(mvScale*100)+'%';
+  mvDraw();
+}
+mvWrap.addEventListener('wheel', e=>{
+  e.preventDefault();
+  const r=mvWrap.getBoundingClientRect();
+  mvZoomAt(e.deltaY<0?1.12:1/1.12, e.clientX-r.left, e.clientY-r.top);
+},{passive:false});
+mvWrap.addEventListener('mousedown', e=>{mvDragging=true;mvDragX=e.clientX-mvOffX;mvDragY=e.clientY-mvOffY;mvWrap.classList.add('dragging');});
+window.addEventListener('mousemove', e=>{if(!mvDragging)return;mvOffX=e.clientX-mvDragX;mvOffY=e.clientY-mvDragY;mvDraw();});
+window.addEventListener('mouseup', ()=>{mvDragging=false;mvWrap.classList.remove('dragging');});
+document.getElementById('mv-zin').addEventListener('click',()=>mvZoomAt(1.25,mvCanvas.width/2,mvCanvas.height/2));
+document.getElementById('mv-zout').addEventListener('click',()=>mvZoomAt(1/1.25,mvCanvas.width/2,mvCanvas.height/2));
+document.getElementById('mv-reset').addEventListener('click',()=>{mvFit();mvDraw();});
+document.getElementById('mv-close').addEventListener('click', mvClose);
+document.addEventListener('keydown', e=>{if(e.key==='Escape'&&mv.classList.contains('open')) mvClose();});
+
+// Touch pinch zoom for map
+let mvTouches=[];
+mvWrap.addEventListener('touchstart', e=>{mvTouches=[...e.touches];},{passive:true});
+mvWrap.addEventListener('touchmove', e=>{
+  e.preventDefault();
+  if(e.touches.length===2&&mvTouches.length===2){
+    const d0=Math.hypot(mvTouches[0].clientX-mvTouches[1].clientX,mvTouches[0].clientY-mvTouches[1].clientY);
+    const d1=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    const cx=(e.touches[0].clientX+e.touches[1].clientX)/2;
+    const cy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+    const r=mvWrap.getBoundingClientRect();
+    mvZoomAt(d1/d0,cx-r.left,cy-r.top);
+  } else if(e.touches.length===1&&mvTouches.length===1){
+    mvOffX+=e.touches[0].clientX-mvTouches[0].clientX;
+    mvOffY+=e.touches[0].clientY-mvTouches[0].clientY;
+    mvDraw();
+  }
+  mvTouches=[...e.touches];
+},{passive:false});
+
+function buildCarousel(images, projectId, projectTitle, isMapViewer) {
   const wrap = document.createElement('div');
   wrap.className = 'carousel';
 
   if (!images || images.length === 0) {
     wrap.innerHTML = `<div class="carousel-track"><div class="no-img">📸 Screenshots coming soon</div></div>`;
+    // For novabuild with no images yet, still allow click to open map viewer placeholder
+    if(isMapViewer) {
+      wrap.style.cursor='zoom-in';
+      wrap.addEventListener('click', ()=> mvOpen('screenshots/novabuild-full.png'));
+    }
     return wrap;
   }
 
@@ -465,7 +680,6 @@ function buildCarousel(images, projectId) {
   wrap.appendChild(track);
 
   if (images.length > 1) {
-    // Prev / Next buttons
     const prev = document.createElement('button');
     prev.className = 'car-btn car-prev';
     prev.innerHTML = '&#8249;';
@@ -476,8 +690,6 @@ function buildCarousel(images, projectId) {
     next.setAttribute('aria-label','Next');
     wrap.appendChild(prev);
     wrap.appendChild(next);
-
-    // Dots
     const dotsWrap = document.createElement('div');
     dotsWrap.className = 'car-dots';
     images.forEach((_,i) => {
@@ -486,16 +698,12 @@ function buildCarousel(images, projectId) {
       dotsWrap.appendChild(d);
     });
     wrap.appendChild(dotsWrap);
-
-    // Count
     const count = document.createElement('div');
     count.className = 'car-count';
     count.textContent = `1 / ${images.length}`;
     wrap.appendChild(count);
-
     let idx = 0;
     const dots = dotsWrap.querySelectorAll('.car-dot');
-
     function goTo(n) {
       idx = (n + images.length) % images.length;
       track.style.transform = `translateX(-${idx * 100}%)`;
@@ -504,11 +712,31 @@ function buildCarousel(images, projectId) {
       prev.classList.toggle('hidden', idx===0);
       next.classList.toggle('hidden', idx===images.length-1);
     }
-
     prev.addEventListener('click', e => { e.stopPropagation(); goTo(idx-1); });
     next.addEventListener('click', e => { e.stopPropagation(); goTo(idx+1); });
     dots.forEach((d,i) => d.addEventListener('click', e => { e.stopPropagation(); goTo(i); }));
     goTo(0);
+  }
+
+  // Click to open: map viewer for novabuild, lightbox for others
+  if(isMapViewer) {
+    wrap.addEventListener('click', () => mvOpen('screenshots/' + images[0]));
+  } else {
+    let carIdx = 0;
+    // track current carousel index for lightbox starting position
+    const trackEl = wrap.querySelector('.carousel-track');
+    if(trackEl) {
+      const obs = new MutationObserver(()=>{
+        const t = trackEl.style.transform;
+        const m = t.match(/-?([\d.]+)%/);
+        if(m) carIdx = Math.round(parseFloat(m[1])/100);
+      });
+      obs.observe(trackEl, {attributes:true, attributeFilter:['style']});
+    }
+    wrap.addEventListener('click', e => {
+      if(e.target.classList.contains('car-btn')||e.target.classList.contains('car-dot')) return;
+      lbOpen(images, carIdx, projectTitle);
+    });
   }
 
   return wrap;
@@ -534,7 +762,7 @@ function buildProjects() {
     card.appendChild(ico);
 
     // Carousel
-    card.appendChild(buildCarousel(p.images, p.id));
+    card.appendChild(buildCarousel(p.images, p.id, p.title, p.id==="novabuild"));
 
     // Text
     const type = document.createElement('div');
