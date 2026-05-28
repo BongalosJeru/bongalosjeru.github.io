@@ -908,16 +908,21 @@ function triggerSectionAnimations(idx){
 
 /* ── SCROLL ── */
 let lastScroll=0;
+let scrollEndTimer=null;
 window.addEventListener('wheel',e=>{
   if(animating)return;
   const now=Date.now();
-  if(now-lastScroll<800)return;
   if(current===3){
     const ps=document.querySelector('.proj-scroll');
-    const atBottom=ps.scrollTop+ps.clientHeight>=ps.scrollHeight-2;
-    const atTop=ps.scrollTop===0;
-    if(e.deltaY>0&&!atBottom)return;
-    if(e.deltaY<0&&!atTop)return;
+    const atBottom=ps.scrollTop+ps.clientHeight>=ps.scrollHeight-10;
+    const atTop=ps.scrollTop<=0;
+    // still scrolling inside — reset the timer
+    if(e.deltaY>0&&!atBottom){ clearTimeout(scrollEndTimer); lastScroll=now; return; }
+    if(e.deltaY<0&&!atTop){ clearTimeout(scrollEndTimer); lastScroll=now; return; }
+    // at boundary — only switch section after user has been at edge for 600ms
+    if(now-lastScroll<1400)return;
+  } else {
+    if(now-lastScroll<800)return;
   }
   lastScroll=now;
   if(e.deltaY>30&&current<secs.length-1)showSection(current+1);
