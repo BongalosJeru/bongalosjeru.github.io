@@ -102,11 +102,15 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
 .sk.in{opacity:1;transform:translateY(0) translateX(0) rotate(0) scale(1);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
 
 /* PROJECTS */
-#s-projects{max-width:1020px;margin:0 auto;width:100%}
-.proj-scroll{overflow-y:auto;max-height:calc(100vh - 185px);padding-right:6px;margin-top:20px;scrollbar-width:thin;scrollbar-color:rgba(200,240,160,.15) transparent}
-.proj-scroll::-webkit-scrollbar{width:3px}
-.proj-scroll::-webkit-scrollbar-thumb{background:rgba(200,240,160,.2);border-radius:2px}
-.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding-bottom:24px}
+#s-projects{max-width:1060px;margin:0 auto;width:100%}
+.proj-scroll{overflow-x:auto;overflow-y:hidden;padding-bottom:12px;margin-top:20px;scrollbar-width:thin;scrollbar-color:rgba(200,240,160,.15) transparent}
+.proj-scroll::-webkit-scrollbar{height:5px}
+.proj-scroll::-webkit-scrollbar-thumb{background:rgba(200,240,160,.25);border-radius:3px}
+.proj-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,320px);grid-template-rows:repeat(2,1fr);grid-auto-flow:column;gap:14px;width:max-content}
+.proj-scroll-hint{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(232,232,240,.25);letter-spacing:.5px;margin-top:10px}
+.proj-scroll-hint i{animation:nudgeRight 1.8s infinite}
+@keyframes nudgeRight{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 
 .pc{background:rgba(255,255,255,.03);border:.5px solid var(--border);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;cursor:default;opacity:0}
 .pc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,240,160,.07),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
@@ -140,6 +144,8 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
 .carousel{position:relative;width:100%;margin-bottom:12px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.03);border:.5px solid rgba(255,255,255,.08)}
 .carousel-track{display:flex;transition:transform .4s cubic-bezier(.16,1,.3,1)}
 .carousel-track img{width:100%;flex-shrink:0;object-fit:cover;height:130px;display:block}
+.carousel-track.portrait img{object-fit:contain;height:220px;background:#0a0a12}
+.carousel.portrait{max-width:140px;margin-left:auto;margin-right:auto}
 .carousel-track .no-img{width:100%;flex-shrink:0;height:80px;display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(232,232,240,.2);font-style:italic}
 .car-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(8,8,16,.75);border:.5px solid rgba(255,255,255,.15);color:var(--text);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:background .2s,border-color .2s;font-size:13px;line-height:1}
 .car-btn:hover{background:rgba(200,240,160,.15);border-color:var(--accent-border)}
@@ -332,6 +338,7 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
     <div class="proj-scroll">
       <div class="proj-grid" id="proj-grid"></div>
     </div>
+    <div class="proj-scroll-hint"><i class="ti ti-arrow-right"></i> scroll for more projects</div>
   </div>
 
 <!-- CERTS -->
@@ -484,25 +491,47 @@ const PROJECTS = [
     ]
   },
   {
-    id: "request-monitoring",
-    featured: false,
-    icon: "ti-clipboard-check",
-    type: "Desktop App · Java Swing",
-    title: "Request Monitoring System",
-    desc: "A Java Swing desktop application for San Beda University managing multi-step service requests with a 4-role approval workflow (Requester → Department Staff → General Services → Head Staff). Features SHA-256 password hashing, soft delete, timestamped review history, and multi-level approval logic.",
-    stack: ["Java 22", "Swing", "MySQL", "JDBC", "Maven"],
-    // ↓ ADD YOUR SCREENSHOTS HERE
+    id: "studyai",
+    featured: true,
+    portrait: false,
+    icon: "ti-brain",
+    type: "Cross-Platform · AI App",
+    title: "StudyAI — AI Study Assistant",
+    desc: "A cross-platform AI study assistant available as a Windows desktop app (.EXE) and Android app (.APK), built from scratch with no templates. Features AI chat, a full RAG system with vector embeddings, a 3-layer semantic cache, AI-generated summaries/quizzes/flashcards, and Firebase auth with cloud sync.",
+    stack: ["Electron.js", "Capacitor", "JavaScript", "OpenAI/Groq", "Hugging Face", "Firebase"],
+    // ↓ ADD YOUR SCREENSHOTS HERE — just add more filenames to the list
     images: [
-      "request-monitoring-1.png",
-      "request-monitoring-2.png",
-	  "request-monitoring-3.png",
-	  "request-monitoring-4.png",
-	  "request-monitoring-5.png",
-	  "request-monitoring-6.png",
-	  "request-monitoring-7.png",
+      "studyai-1.png",
+      "studyai-2.png",
+	  "studyai-3.png",
+	  "studyai-4.png",
+	  "studyai-5.png",
     ],
     links: [
-      { label: "View Code", icon: "ti-brand-github", url: "https://github.com/BongalosJeru/request-monitoring-system" },
+      { label: "View Code", icon: "ti-brand-github", url: "https://github.com/BongalosJeru/studyai" },
+      // ↓ add these once you upload the EXE/APK as a GitHub Release
+      // { label: "Download EXE", icon: "ti-download", url: "https://github.com/BongalosJeru/studyai/releases" },
+      // { label: "Download APK", icon: "ti-android", url: "https://github.com/BongalosJeru/studyai/releases" },
+    ]
+  },
+  {
+    id: "moodchat",
+    featured: true,
+    portrait: true,
+    icon: "ti-message-heart",
+    type: "Mobile · AI · API",
+    title: "MoodChat — AI Mood Detection Chat",
+    desc: "A mobile chat app that uses AI to detect a user's emotional state from typed messages and replies with empathetic responses and personalized activity recommendations. Built with FlutterFlow calling a custom Python Flask API running an open-source HuggingFace emotion model, with all conversations and mood data logged to MySQL.",
+    stack: ["FlutterFlow", "Python Flask", "MySQL", "HuggingFace", "ngrok"],
+    // ↓ ADD YOUR SCREENSHOTS HERE — these are portrait/mobile screenshots
+    images: [
+      "moodchat-1.png",
+      "moodchat-2.png",
+	  "moodchat-3.png",
+	  "moodchat-4.png",
+    ],
+    links: [
+      { label: "View Code", icon: "ti-brand-github", url: "https://github.com/BongalosJeru/moodchat" },
     ]
   },
   {
@@ -538,6 +567,28 @@ const PROJECTS = [
     ],
     links: [
       { label: "View Topology", icon: "ti-zoom-in", url: "screenshots/novabuild-full.png" },
+    ]
+  },
+  {
+    id: "request-monitoring",
+    featured: false,
+    icon: "ti-clipboard-check",
+    type: "Desktop App · Java Swing",
+    title: "Request Monitoring System",
+    desc: "A Java Swing desktop application for San Beda University managing multi-step service requests with a 4-role approval workflow (Requester → Department Staff → General Services → Head Staff). Features SHA-256 password hashing, soft delete, timestamped review history, and multi-level approval logic.",
+    stack: ["Java 22", "Swing", "MySQL", "JDBC", "Maven"],
+    // ↓ ADD YOUR SCREENSHOTS HERE
+    images: [
+      "request-monitoring-1.png",
+      "request-monitoring-2.png",
+	  "request-monitoring-3.png",
+	  "request-monitoring-4.png",
+	  "request-monitoring-5.png",
+	  "request-monitoring-6.png",
+	  "request-monitoring-7.png",
+    ],
+    links: [
+      { label: "View Code", icon: "ti-brand-github", url: "https://github.com/BongalosJeru/request-monitoring-system" },
     ]
   },
 ];
@@ -679,9 +730,9 @@ mvWrap.addEventListener('touchmove', e=>{
   mvTouches=[...e.touches];
 },{passive:false});
 
-function buildCarousel(images, projectId, projectTitle, isMapViewer) {
+function buildCarousel(images, projectId, projectTitle, isMapViewer, isPortrait) {
   const wrap = document.createElement('div');
-  wrap.className = 'carousel';
+  wrap.className = 'carousel' + (isPortrait ? ' portrait' : '');
 
   if (!images || images.length === 0) {
     wrap.innerHTML = `<div class="carousel-track"><div class="no-img">📸 Screenshots coming soon</div></div>`;
@@ -694,7 +745,7 @@ function buildCarousel(images, projectId, projectTitle, isMapViewer) {
   }
 
   const track = document.createElement('div');
-  track.className = 'carousel-track';
+  track.className = 'carousel-track' + (isPortrait ? ' portrait' : '');
   images.forEach(src => {
     const img = document.createElement('img');
     img.src = `screenshots/${src}`;
@@ -787,7 +838,7 @@ function buildProjects() {
     card.appendChild(ico);
 
     // Carousel
-    card.appendChild(buildCarousel(p.images, p.id, p.title, p.id==="novabuild"));
+    card.appendChild(buildCarousel(p.images, p.id, p.title, p.id==="novabuild", !!p.portrait));
 
     // Text
     const type = document.createElement('div');
@@ -908,19 +959,24 @@ function triggerSectionAnimations(idx){
 
 /* ── SCROLL ── */
 let lastScroll=0;
-let scrollEndTimer=null;
 window.addEventListener('wheel',e=>{
   if(animating)return;
   const now=Date.now();
   if(current===3){
     const ps=document.querySelector('.proj-scroll');
-    const atBottom=ps.scrollTop+ps.clientHeight>=ps.scrollHeight-10;
-    const atTop=ps.scrollTop<=0;
-    // still scrolling inside — reset the timer
-    if(e.deltaY>0&&!atBottom){ clearTimeout(scrollEndTimer); lastScroll=now; return; }
-    if(e.deltaY<0&&!atTop){ clearTimeout(scrollEndTimer); lastScroll=now; return; }
-    // at boundary — only switch section after user has been at edge for 600ms
-    if(now-lastScroll<1400)return;
+    const needsScroll = ps.scrollWidth > ps.clientWidth + 4;
+    if(needsScroll){
+      // translate vertical wheel into horizontal scroll inside the project rail
+      ps.scrollLeft += e.deltaY;
+      const atRight = ps.scrollLeft + ps.clientWidth >= ps.scrollWidth - 4;
+      const atLeft = ps.scrollLeft <= 0;
+      // only allow leaving the section once at the true edge, and only after a pause
+      if(e.deltaY>0 && !atRight){ lastScroll=now; return; }
+      if(e.deltaY<0 && !atLeft){ lastScroll=now; return; }
+      if(now-lastScroll<900) return;
+    } else {
+      if(now-lastScroll<800)return;
+    }
   } else {
     if(now-lastScroll<800)return;
   }
@@ -928,6 +984,11 @@ window.addEventListener('wheel',e=>{
   if(e.deltaY>30&&current<secs.length-1)showSection(current+1);
   else if(e.deltaY<-30&&current>0)showSection(current-1);
 },{passive:true});
+
+// allow trackpad/native horizontal scroll inside the rail without affecting section nav
+document.querySelector('.proj-scroll')?.addEventListener('wheel', e=>{
+  // handled above; this just ensures default vertical scroll doesn't bubble oddly
+}, {passive:true});
 
 let touchY=0;
 window.addEventListener('touchstart',e=>touchY=e.touches[0].clientY,{passive:true});
