@@ -107,7 +107,7 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
 .proj-scroll::-webkit-scrollbar{height:5px}
 .proj-scroll::-webkit-scrollbar-thumb{background:rgba(200,240,160,.25);border-radius:3px}
 .proj-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
-.proj-grid{display:grid;grid-template-columns:repeat(3,calc((100vw - 96px - 36px) / 3));grid-template-rows:repeat(2,1fr);grid-auto-flow:column;gap:18px;width:max-content}
+.proj-grid{display:grid;grid-template-columns:repeat(3,calc((100vw - 96px - 36px) / 3));grid-template-rows:1fr;grid-auto-flow:column;gap:18px;width:max-content}
 .proj-scroll-hint{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(232,232,240,.25);letter-spacing:.5px;margin-top:10px;padding-left:0}
 .proj-scroll-hint i{animation:nudgeRight 1.8s infinite}
 @keyframes nudgeRight{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
@@ -133,8 +133,8 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
 .ptype{font-size:10px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .ptitle{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#f0f0fa;margin-bottom:8px;letter-spacing:-.3px}
 .pdesc{font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.pdesc-more{font-size:11.5px;color:var(--accent);cursor:pointer;background:none;border:none;padding:0;margin-bottom:14px;display:inline-block;text-align:left;font-family:inherit;transition:opacity .2s}
-.pdesc-more:hover{opacity:.7}
+.pdesc-more{font-size:11px;color:var(--muted);cursor:pointer;background:none;border:none;border-bottom:.5px solid rgba(255,255,255,.15);padding:0 0 1px 0;margin-bottom:14px;display:inline-block;text-align:left;font-family:inherit;letter-spacing:.3px;text-transform:uppercase;transition:color .2s,border-color .2s}
+.pdesc-more:hover{color:var(--accent);border-color:var(--accent-border)}
 .pstack{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
 .stag{font-size:11px;background:rgba(255,255,255,.05);border:.5px solid var(--border);color:var(--muted);padding:3px 8px;border-radius:4px}
 .plinks{display:flex;gap:8px;flex-wrap:wrap}
@@ -338,17 +338,15 @@ h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(40px,6.5vw,76px);fon
       <div class="sk fly-left"><i class="ti ti-brand-php"></i> PHP</div>
       <div class="sk fly-up"><i class="ti ti-code"></i> HTML / CSS</div>
       <div class="sk fly-right"><i class="ti ti-brand-javascript"></i> JavaScript</div>
-      <div class="sk spin-in"><i class="ti ti-coffee"></i> Java (Swing & Spring Boot)</div>
+      <div class="sk spin-in"><i class="ti ti-coffee"></i> Java</div>
       <div class="sk fly-down"><i class="ti ti-database"></i> MySQL</div>
-      <div class="sk fly-left"><i class="ti ti-device-mobile"></i> FlutterFlow</div>
-      <div class="sk fly-up"><i class="ti ti-api"></i> REST APIs</div>
-      <div class="sk fly-right"><i class="ti ti-chart-bar"></i> Chart.js</div>
+      <div class="sk fly-left"><i class="ti ti-brand-electron"></i> Electron.js</div>
+      <div class="sk fly-up"><i class="ti ti-leaf"></i> Spring Boot</div>
+      <div class="sk fly-right"><i class="ti ti-flame"></i> Firebase</div>
       <div class="sk spin-in"><i class="ti ti-server"></i> Apache / XAMPP</div>
-      <div class="sk fly-down"><i class="ti ti-topology-star"></i> Cisco Packet Tracer</div>
-      <div class="sk fly-left"><i class="ti ti-shield-lock"></i> Web Security / OWASP</div>
-      <div class="sk fly-up"><i class="ti ti-brand-git"></i> Git & GitHub</div>
-      <div class="sk fly-right"><i class="ti ti-device-gamepad-2"></i> Unity</div>
-      <div class="sk spin-in"><i class="ti ti-terminal-2"></i> C++</div>
+      <div class="sk fly-down"><i class="ti ti-topology-star"></i> Network Design</div>
+      <div class="sk fly-left"><i class="ti ti-device-gamepad-2"></i> Unity</div>
+      <div class="sk fly-up"><i class="ti ti-terminal-2"></i> C++</div>
     </div>
   </div>
 
@@ -927,7 +925,7 @@ function buildProjects() {
 
     const moreBtn = document.createElement('button');
     moreBtn.className = 'pdesc-more';
-    moreBtn.textContent = 'Read more →';
+    moreBtn.textContent = 'Full details';
     moreBtn.addEventListener('click', (e) => { e.stopPropagation(); openProjectDetail(p); });
     card.appendChild(moreBtn);
 
